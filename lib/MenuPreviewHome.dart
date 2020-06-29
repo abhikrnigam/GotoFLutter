@@ -68,28 +68,23 @@ class _MenuPreviewHomeState extends State<MenuPreviewHome> {
                     borderRadius: BorderRadius.circular(20)
                     ),
                   child: Container(
-                    padding: EdgeInsets.only(top: 7),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        AppIcon(imageName: "images/Phone_2x.png",),
-                        AppIcon(imageName: "images/Settings_2x.png"),
-                        AppIcon(imageName: "images/Photos_2x.png"),
-                        AppIcon(imageName: "images/Mail_2x.png"),
-                      ],
+                    padding: EdgeInsets.only(top: 1),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          AppIcon(imageName: "images/Phone_2x.png",),
+                          AppIcon(imageName: "images/Settings_2x.png"),
+                          AppIcon(imageName: "images/Photos_2x.png"),
+                          AppIcon(imageName: "images/Mail_2x.png"),
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              )
-
             ],
           ),
         ],
         ),
-
-
-
-
         ),
       );
   }
@@ -102,29 +97,29 @@ class AppIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 5,),
-      height: MediaQuery.of(context).size.height*0.2,
-      width: MediaQuery.of(context).size.width*0.20,
-      padding: EdgeInsets.all(10),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Column(
-        children: [
-          Image(
-            fit: BoxFit.contain,
-          image: AssetImage("$imageName"),
-          ),
-          iconTitle!=null?Padding(
-            padding: const EdgeInsets.only(top:8.0),
-            child:Text("$iconTitle",style: GoogleFonts.nanumGothic(
-              color: Colors.white,
-              fontSize: 12,
-              fontWeight: FontWeight.w600
-            ),),
-          ):Text(""),
-        ],
-      ),
+        margin: EdgeInsets.symmetric(horizontal: 5,),
+        height: MediaQuery.of(context).size.height*0.2,
+        width: MediaQuery.of(context).size.width*0.20,
+        padding: EdgeInsets.all(8),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Column(
+          children: [
+            Image(
+              fit: BoxFit.contain,
+            image: AssetImage("$imageName"),
+            ),
+            iconTitle!=null?Padding(
+              padding: const EdgeInsets.only(top:8.0),
+              child:Text("$iconTitle",style: GoogleFonts.nanumGothic(
+                color: Colors.white,
+                fontSize: 12,
+                fontWeight: FontWeight.w600
+              ),),
+            ):Container(),
+          ],
+        ),
     );
   }
 }
