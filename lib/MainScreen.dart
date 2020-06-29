@@ -1,18 +1,13 @@
 import 'dart:async';
-
-import 'dart:typed_data';
-import 'package:dio/dio.dart';
-import 'package:http/http.dart';
+import 'dart:io';
+import 'package:gotoflutter/MenuPreviewHome.dart';
 import 'package:shake/shake.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
+import 'MenuPreview.dart';
 import 'package:http/http.dart' as http;
-//import 'package:gallery_saver/gallery_saver.dart';
-import 'package:image_gallery_saver/image_gallery_saver.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:image_picker_saver/image_picker_saver.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 
 class MainScreen extends StatefulWidget {
@@ -69,6 +64,56 @@ class _MainScreenState extends State<MainScreen> {
     });
   }
 
+  Widget giveLockScreenPreview(String imageUrl){
+    return Container(
+      child: Stack(
+        children: <Widget>[
+          Container(
+          height: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width,
+          child: Image.network(imageUrl,fit: BoxFit.cover,),
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Row(
+                children: <Widget>[
+                  Text("Airtel",style: GoogleFonts.poppins(
+                    color: Colors.white,
+                    fontSize: 10,
+                  ),
+                  ),
+                  Icon(
+                    Icons.lock,
+                    color: Colors.white,
+                    size: 10,
+                  ),
+                  Icon(
+                    Icons.battery_std,
+                    size: 10,
+                      color: Colors.white,
+                  ),
+                ],
+              ),
+              Text("6:40",style: GoogleFonts.poppins(
+                color: Colors.white,
+                fontSize: 25,
+              ),),
+              Text("Monday,29 June",style: GoogleFonts.poppins(
+                color: Colors.white,
+                fontSize: 15,
+              ),),
+              Spacer(),
+              Text("Press Home to unlock",style: GoogleFonts.poppins(
+                color: Colors.white,
+                fontSize: 13,
+              ),),
+            ],
+          )
+        ],
+      ),
+    );
+  }
 
 @override
   void initState() {
@@ -107,19 +152,15 @@ class _MainScreenState extends State<MainScreen> {
       itemBuilder: (context,index){
       return Stack(
       children: <Widget>[
-      GestureDetector(
-        child: Container(
-        height: MediaQuery.of(context).size.height,
-        width:MediaQuery.of(context).size.width,
-        child: Image(
-        fit: BoxFit.cover,
-        image: NetworkImage("${imageLinks[index]}"),
-        ),
-        ),
-        onDoubleTap: (){
-          _onImagDownloadButtonPressed(imageLinks[index]);
-        },
+      Container(
+      height: MediaQuery.of(context).size.height,
+      width:MediaQuery.of(context).size.width,
+      child: Image(
+      fit: BoxFit.cover,
+      image: NetworkImage("${imageLinks[index]}"),
       ),
+      ),
+
       Align(
       alignment: Alignment.topLeft,
       child: Padding(
@@ -140,7 +181,55 @@ class _MainScreenState extends State<MainScreen> {
       ),
       ),
       ),
-
+        Align(
+          child: Container(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text("${index+1}",style: GoogleFonts.poppins(
+                color: Colors.black,
+                fontSize: 10,
+                fontWeight: FontWeight.bold,
+              ),
+              ),
+            ),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20),
+              color: Colors.white,
+            ),
+            margin: EdgeInsets.only(bottom: 20),
+          ),
+          alignment: Alignment.bottomCenter,
+        ),
+        Row(
+          children: <Widget>[
+            InkWell(
+              child:
+              SizedBox(
+                height: MediaQuery.of(context).size.height,
+                width: MediaQuery.of(context).size.width*0.5,
+              ),
+              onLongPress: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context)=> MenuPreview(imageUrl: imageLinks[index],)));
+              },
+              onDoubleTap: (){
+                _onImagDownloadButtonPressed(imageLinks[index]);
+              },
+            ),
+            InkWell(
+              child:
+              SizedBox(
+                height: MediaQuery.of(context).size.height,
+                width: MediaQuery.of(context).size.width*0.5,
+              ),
+              onLongPress: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context)=> MenuPreviewHome(imageUrl: imageLinks[index],)));
+              },
+              onDoubleTap: (){
+                _onImagDownloadButtonPressed(imageLinks[index]);
+              },
+            ),
+          ],
+        ),
       ],
       );
       });
